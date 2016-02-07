@@ -1,9 +1,9 @@
-package googlehash;
+package trialRound;
 
-public class board {
+public class Image {
 	private String[] wall;
 	
-	public board(String[] wall) {
+	public Image(String[] wall) {
 		this.wall = wall;
 	}
 	

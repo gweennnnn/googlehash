@@ -1,12 +1,12 @@
-package googlehash;
+package trialRound;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class processFile {
+public class ProcessFile {
 	String filename;
 	
-	public processFile(String filename) {
+	public ProcessFile(String filename) {
 		this.filename = filename;
 	}
 	
