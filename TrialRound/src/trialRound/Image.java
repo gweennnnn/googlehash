@@ -62,6 +62,10 @@ public class Image {
 		return imgArr[index];
 	}
 	
+	public char get(Coords coord) {
+		return imgArr[coord.row()].charAt(coord.col());
+	}
+	
 	public void set(int index, String row) {
 		imgArr[index] = row;
 	}

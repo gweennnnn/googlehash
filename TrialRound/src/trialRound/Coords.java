@@ -1,31 +1,45 @@
 package trialRound;
 
 public class Coords {
-	private int x;
-	private int y;
-	public Coords(int x, int y) {
-		this.x = x;
-		this.y = y;
+	private int row;
+	private int col;
+	public Coords(int row, int col) {
+		this.row = row;
+		this.col = col;
+	}
+	
+	public Coords() {
+		this.row = -1;
+		this.col = -1;
 	}
 	
 	public int row() {
-		return this.x;
+		return this.row;
 	}
 	
 	public int col() {
-		return this.y;
+		return this.col;
+	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
+	
+	public void setCol(int col) {
+		this.col = col;
 	}
 	
 	@Override
 	public String toString() {
-		return("(" + x + ", " + y + ")");
+		return("(" + row + ", " + col + ")");
 	}
 	
 	@Override
 	public boolean equals(Object c1) {
 		Coords c2 = (Coords)c1;
-		if(x == c2.x && y == c2.y)
+		if(row == c2.row && col == c2.col)
 			return true;
 		return false;
 	}
+	
 }

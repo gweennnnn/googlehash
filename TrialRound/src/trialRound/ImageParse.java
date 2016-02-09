@@ -33,22 +33,21 @@ public class ImageParse {
 	 * @param curr
 	 * @return array of coords of available neighbours
 	 */
-	public static ArrayList<Coords> isConnected(Image image, Coords curr) {
+	public static ArrayList<Coords> isConnected(Image image, Coords curr, ArrayList<Coords> explored) {
 		ArrayList<Coords> returnArr = new ArrayList<Coords>();
 		int row = curr.row();
 		int col = curr.col();
-		System.out.println(row + ", " + col);
 		//top
-		if((col-1) >= 0 && image.get(row).charAt(col-1) == '#')
+		if((col-1) >= 0 && image.get(row).charAt(col-1) == '#' && !explored.contains(new Coords(row, col-1)))
 			returnArr.add(new Coords(row, col-1));
 		//bottom
-		if((col + 1) < image.get(row).length() && image.get(row).charAt(col+1) == '#')
+		if((col + 1) < image.get(row).length() && image.get(row).charAt(col+1) == '#' && !explored.contains(new Coords(row, col+1)))
 			returnArr.add(new Coords(row, col+1));
 		//left
-		if((row - 1) >= 0 && image.get(row-1).charAt(col) == '#')
+		if((row - 1) >= 0 && image.get(row-1).charAt(col) == '#' && !explored.contains(new Coords(row-1, col)))
 			returnArr.add(new Coords(row-1, col));
 		//right
-		if((row + 1) < image.length() && image.get(row+1).charAt(col) == '#')
+		if((row + 1) < image.length() && image.get(row+1).charAt(col) == '#' && !explored.contains(new Coords(row+1, col)))
 			returnArr.add(new Coords(row+1, col));
 		
 		if(returnArr.size() > 0)
@@ -66,20 +65,16 @@ public class ImageParse {
 	public static void markShape(Image image, int num, ArrayList<Coords> queue, ArrayList<Coords> explored) {
 		
 		if(queue.size() > 0) {
-			System.out.println("Current queue " + queue);
-			System.out.println("Current explored " + explored);
 			Coords currCoord = queue.remove(0);
-			System.out.println("Current coord " + currCoord);
 			
 			if(!explored.contains(currCoord)) {
+				
 				char charNum =  Character.forDigit(num, 10);
 				String newStr = replaceChar(image.get(currCoord.row()), currCoord.col(), charNum);
 				image.set(currCoord.row(), newStr);
-				ArrayList<Coords> neighbours = isConnected(image, currCoord);
-				System.out.println("Neighbours " + neighbours);
+				ArrayList<Coords> neighbours = isConnected(image, currCoord, explored);
 				if(neighbours != null) queue.addAll(neighbours);
 				explored.add(currCoord);
-				System.out.println(image.toString());
 			}
 			markShape(image, num, queue, explored);
 		}
@@ -90,13 +85,81 @@ public class ImageParse {
 	 * @param image
 	 * @param num
 	 */
-	public static void markAllShapes(Image image, int num) {
+	public static void markAllShapes(Image image, int num, ArrayList<ArrayList<Coords>> coordsOfPatterns) {
 		Coords currHash = findHash(image);
+		
 		if(currHash != null) {
 			ArrayList<Coords> newQueue = new ArrayList<Coords>();
+			ArrayList<Coords> newExplored = new ArrayList<Coords>();
 			newQueue.add(currHash);
-			markShape(image, num, newQueue, new ArrayList<Coords>());
-			markAllShapes(image, num+1);
+			markShape(image, num, newQueue, newExplored);
+			
+			ArrayList<Coords> patternstartend = new ArrayList<Coords>();
+			coordsOfPatterns.add(newExplored);
+			markAllShapes(image, num+1, coordsOfPatterns);
 		}
 	}
+	
+	/**
+	 * Get amount of squares filled in a boundary
+	 * @param pattern
+	 * @return percentage filled
+	 */
+	public static double getPercentageFilled(ArrayList<Coords> pattern) {
+		double totsq = getNoOfTotalSquares(pattern);
+		double patternsq = getNoOfTotalSquaresInPattern(pattern);
+		return (patternsq/totsq)*100;
+	}
+	
+	/**
+	 * Get amount of total squares in pattern
+	 * @param pattern
+	 * @return total squares in pattern
+	 */
+	public static int getNoOfTotalSquaresInPattern(ArrayList<Coords> pattern) {
+		
+		return pattern.size();
+	}
+	
+	/**
+	 * Get number of total squares within the rectangle bit surrounding pattern
+	 * @param pattern
+	 * @return
+	 */
+	public static int getNoOfTotalSquares(ArrayList<Coords> pattern) {
+		ArrayList<Coords> startend = getStartEnd(pattern);
+		
+		Coords startCoords = startend.get(0);
+		Coords endCoords = startend.get(1);
+		
+		int totalSquares = (endCoords.row() - startCoords.row()) * (endCoords.col() - startCoords.col());
+		return totalSquares;
+	}
+	
+	/**
+	 * Gets the top left and bottom righ coord
+	 * @param pattern
+	 * @return arraylist of coords in the pattern
+	 */
+	public static ArrayList<Coords> getStartEnd(ArrayList<Coords> pattern) {
+		int startrow, startcol, endrow, endcol;
+		startrow = endrow = pattern.get(0).row();
+		startcol = endcol = pattern.get(0).col();
+		
+		for(int i = 1; i < pattern.size(); i++) {
+			if(startrow > pattern.get(i).row()) {
+				startrow = pattern.get(i).row();}
+			if(startcol > pattern.get(i).col()) {
+				startcol = (pattern.get(i).col());}
+			if(endrow < pattern.get(i).row()) {
+				endrow = (pattern.get(i).row());}
+			if(endcol < pattern.get(i).col()) {
+				endcol = (pattern.get(i).col());}
+		}
+		ArrayList<Coords> returnArr = new ArrayList<Coords>();
+		returnArr.add(new Coords(startrow, startcol));
+		returnArr.add(new Coords(endrow, endcol));
+		return returnArr;
+	}
+	
 }
