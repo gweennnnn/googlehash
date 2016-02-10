@@ -163,10 +163,10 @@ public class ImageParse {
 	}
 	
 	public static void determineStrategy(ArrayList<ArrayList<Coords>> listOfPatterns, Image board) throws Exception {
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 1; i++) {
 			ArrayList<Coords> currPattern = listOfPatterns.get(i);
 			double filled = getPercentageFilled(currPattern);
-			
+			System.out.println(filled);
 			//Case 1: simply use lines
 			if(filled >= 0.0 && filled <= 46.0) {
 				boolean rowLonger = isRowLongerThanCol(currPattern);
