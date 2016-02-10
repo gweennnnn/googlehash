@@ -7,7 +7,7 @@ public class Image {
 		this.imgArr = imgArr;
 	}
 	
-	public void PAINT_SQUARE(int R, int C, int S) {
+	public String PAINT_SQUARE(int R, int C, int S) {
 		int startR = R-S;
 		int endR = R+S;
 		int startC = C-S;
@@ -20,9 +20,10 @@ public class Image {
 				imgArr[i] = currStr.toString();
 			}
 		}
+		return "PAINT_SQUARE " + R + " " + C + " " + S;
 	}
 	
-	public void PAINT_LINE(int R1, int C1, int R2, int C2) {
+	public String PAINT_LINE(int R1, int C1, int R2, int C2) {
 		if(R1 == R2) {
 			for(int i = C1; i <= C2; i++) {
 				StringBuilder currStr = new StringBuilder(imgArr[R1]);
@@ -37,12 +38,14 @@ public class Image {
 				imgArr[i] = currStr.toString();
 			}
 		}
+		return "PAINT_LINE " + R1 + " " + C1 + " " + R2 + " " + C2;
 	}
 	
-	public void ERASE_CELL(int R, int C) {
+	public String ERASE_CELL(int R, int C) {
 		StringBuilder currStr = new StringBuilder(imgArr[R]);
 		currStr.setCharAt(C,'#');
 		imgArr[R] = currStr.toString();
+		return "ERASE CELL " + R + " " + C ;
 	}
 	
 	@Override

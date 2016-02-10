@@ -1,6 +1,8 @@
 package trialRound;
 
-public class Coords {
+import java.util.Comparator;
+
+public class Coords implements Comparable<Coords> {
 	private int row;
 	private int col;
 	public Coords(int row, int col) {
@@ -42,4 +44,42 @@ public class Coords {
 		return false;
 	}
 	
+	@Override
+	public int compareTo(Coords compare) {
+		return row - compare.row();
+	}	
+	
+	public int compareCol(Coords compare) {
+		return col - compare.col();
+	}
+	
+	public static Comparator<Coords> RowComparator 
+	    = new Comparator<Coords>() {
+		@Override
+		public int compare(Coords c1, Coords c2) {
+		
+			int sortRow = c1.compareTo(c2);
+			
+			if(sortRow != 0)
+				return sortRow;
+			else {
+				return c1.compareCol(c2);
+			}
+		}
+	
+	};
+	
+	public static Comparator<Coords> ColComparator 
+	    = new Comparator<Coords>() {
+		@Override
+		public int compare(Coords c1, Coords c2) {
+		
+			int sortRow = c1.compareCol(c2);
+			if(sortRow != 0)
+				return sortRow;
+			else {
+				return c1.compareTo(c2);
+			}
+		}
+	};
 }

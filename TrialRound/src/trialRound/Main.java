@@ -3,7 +3,7 @@ package trialRound;
 import java.util.ArrayList;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ProcessFile fileManager = new ProcessFile("logo.in");
 		String[] pictureInput = fileManager.getFile();
 		Image drawingBoard = new Image(pictureInput);
@@ -11,12 +11,6 @@ public class Main {
 		ImageParse.markAllShapes(drawingBoard, 1, listOfPatterns);
 		System.out.println(drawingBoard.toString());
 		System.out.println(listOfPatterns);
-		System.out.println(ImageParse.getPercentageFilled(listOfPatterns.get(0)));
+		ImageParse.determineStrategy(listOfPatterns, drawingBoard);
 	}
-		
-	
-	public static void isolateShapes(Image image) {
-		
-	}
-	
 }

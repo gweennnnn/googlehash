@@ -162,4 +162,52 @@ public class ImageParse {
 		return returnArr;
 	}
 	
+	public static void determineStrategy(ArrayList<ArrayList<Coords>> listOfPatterns, Image board) throws Exception {
+		for(int i = 0; i < 2; i++) {
+			ArrayList<Coords> currPattern = listOfPatterns.get(i);
+			double filled = getPercentageFilled(currPattern);
+			
+			//Case 1: simply use lines
+			if(filled >= 0.0 && filled <= 46.0) {
+				boolean rowLonger = isRowLongerThanCol(currPattern);
+				//if row is long, than simply go through and solve using lines on rows
+				//TODO: Optimise this to something clever
+				if(rowLonger) {
+					currPattern.sort(Coords.RowComparator);
+					
+					int start, end = i;
+					start = end = currPattern.get(0).col();
+					ArrayList<String> moves = new ArrayList<String>();
+					for(int x = 1; x < currPattern.size(); x++) {
+						if(currPattern.get(start).row() > currPattern.get(i).row()) {
+							Coords s = currPattern.get(start);
+							Coords e = currPattern.get(end);
+							moves.add(board.PAINT_LINE(s.row(), s.col(), e.row(), e.col()));
+						}
+					}
+				}
+			}
+			//Case 2: mid cases, determine squares or lines
+			else if(filled > 46.0 && filled <= 60) {
+				
+			}
+			//Case 3: prioritises square, fall back on case 2
+			else if(filled <= 100.0) {
+				
+			}
+			else {
+				throw new Exception("Somehow percentage is more than 100 or less than 0");
+			}
+		}
+	}
+	
+	//Line strategies
+	public static boolean isRowLongerThanCol(ArrayList<Coords> pattern) {
+		ArrayList<Coords> startend = getStartEnd(pattern);
+		Coords startCoords = startend.get(0);
+		Coords endCoords = startend.get(1);
+		if((endCoords.row() - startCoords.row()) > (endCoords.col() - startCoords.col()))
+			return true;
+		return false;
+	}
 }
