@@ -38,6 +38,8 @@ public class Image {
 				imgArr[i] = currStr.toString();
 			}
 		}
+		else {
+		}
 		return "PAINT_LINE " + R1 + " " + C1 + " " + R2 + " " + C2;
 	}
 	

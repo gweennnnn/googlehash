@@ -10,7 +10,6 @@ public class Main {
 		ArrayList<ArrayList<Coords>> listOfPatterns = new ArrayList<ArrayList<Coords>>();
 		ImageParse.markAllShapes(drawingBoard, 1, listOfPatterns);
 		System.out.println(drawingBoard.toString());
-		System.out.println(listOfPatterns);
 		ImageParse.determineStrategy(listOfPatterns, drawingBoard);
 	}
 }

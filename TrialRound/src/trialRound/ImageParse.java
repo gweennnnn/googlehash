@@ -108,6 +108,8 @@ public class ImageParse {
 	public static double getPercentageFilled(ArrayList<Coords> pattern) {
 		double totsq = getNoOfTotalSquares(pattern);
 		double patternsq = getNoOfTotalSquaresInPattern(pattern);
+		System.out.println("Total  : "+ totsq);
+		System.out.println("Pattern: " + patternsq);
 		return (patternsq/totsq)*100;
 	}
 	
@@ -117,7 +119,6 @@ public class ImageParse {
 	 * @return total squares in pattern
 	 */
 	public static int getNoOfTotalSquaresInPattern(ArrayList<Coords> pattern) {
-		
 		return pattern.size();
 	}
 	
@@ -131,8 +132,7 @@ public class ImageParse {
 		
 		Coords startCoords = startend.get(0);
 		Coords endCoords = startend.get(1);
-		
-		int totalSquares = (endCoords.row() - startCoords.row()) * (endCoords.col() - startCoords.col());
+		int totalSquares = (endCoords.row() - startCoords.row()+1) * (endCoords.col() - startCoords.col()+1);
 		return totalSquares;
 	}
 	
@@ -163,41 +163,21 @@ public class ImageParse {
 	}
 	
 	public static void determineStrategy(ArrayList<ArrayList<Coords>> listOfPatterns, Image board) throws Exception {
-		for(int i = 0; i < 1; i++) {
+		for(int i = 0; i < 2; i++) {
+			System.out.println("===============Next pattern");
 			ArrayList<Coords> currPattern = listOfPatterns.get(i);
+			System.out.println(currPattern);
 			double filled = getPercentageFilled(currPattern);
-			System.out.println(filled);
-			//Case 1: simply use lines
-			if(filled >= 0.0 && filled <= 46.0) {
-				boolean rowLonger = isRowLongerThanCol(currPattern);
-				//if row is long, than simply go through and solve using lines on rows
-				//TODO: Optimise this to something clever
-				if(rowLonger) {
-					currPattern.sort(Coords.RowComparator);
-					
-					int start, end = i;
-					start = end = currPattern.get(0).col();
-					ArrayList<String> moves = new ArrayList<String>();
-					for(int x = 1; x < currPattern.size(); x++) {
-						if(currPattern.get(start).row() > currPattern.get(i).row()) {
-							Coords s = currPattern.get(start);
-							Coords e = currPattern.get(end);
-							moves.add(board.PAINT_LINE(s.row(), s.col(), e.row(), e.col()));
-						}
-					}
-				}
-			}
-			//Case 2: mid cases, determine squares or lines
-			else if(filled > 46.0 && filled <= 60) {
-				
-			}
-			//Case 3: prioritises square, fall back on case 2
-			else if(filled <= 100.0) {
-				
-			}
-			else {
-				throw new Exception("Somehow percentage is more than 100 or less than 0");
-			}
+			System.out.println("Filled: " + filled);
+			
+			if(true) {
+				currPattern.sort(Coords.RowComparator);
+				System.out.println("sorted pattern");
+				System.out.println(currPattern);
+			} 
+//			else {
+//				throw new Exception("Somehow percentage is more than 100 or less than 0");
+//			}
 		}
 	}
 	
