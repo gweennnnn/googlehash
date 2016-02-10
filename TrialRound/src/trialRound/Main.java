@@ -8,8 +8,13 @@ public class Main {
 		String[] pictureInput = fileManager.getFile();
 		Image drawingBoard = new Image(pictureInput);
 		ArrayList<ArrayList<Coords>> listOfPatterns = new ArrayList<ArrayList<Coords>>();
-		ImageParse.markAllShapes(drawingBoard, 1, listOfPatterns);
+		ArrayList<ArrayList<Coords>> listOfStartEnd = new ArrayList<ArrayList<Coords>>();
+		ImageParse.markAllShapes(drawingBoard, 1, listOfPatterns, listOfStartEnd);
 		System.out.println(drawingBoard.toString());
-		ImageParse.determineStrategy(listOfPatterns, drawingBoard);
+		System.out.println("/////LIST OF PATTERNS/////");
+		System.out.println(listOfPatterns);
+		System.out.println("/////LIST OF STARTEND/////");
+		System.out.println(listOfStartEnd);
+		ImageParse.determineStrategy(listOfPatterns, listOfStartEnd, drawingBoard);
 	}
 }

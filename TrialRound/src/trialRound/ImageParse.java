@@ -62,11 +62,12 @@ public class ImageParse {
 	 * @param num
 	 * @param queue
 	 */
-	public static void markShape(Image image, int num, ArrayList<Coords> queue, ArrayList<Coords> explored) {
+	public static void markShape(Image image, int num, ArrayList<Coords> queue, ArrayList<Coords> explored, Coords start, Coords end) {
 		
 		if(queue.size() > 0) {
 			Coords currCoord = queue.remove(0);
-			
+			Coords newstart = start;
+			Coords newend = end;
 			if(!explored.contains(currCoord)) {
 				
 				char charNum =  Character.forDigit(num, 10);
@@ -75,8 +76,18 @@ public class ImageParse {
 				ArrayList<Coords> neighbours = isConnected(image, currCoord, explored);
 				if(neighbours != null) queue.addAll(neighbours);
 				explored.add(currCoord);
+				
+				if(newstart.row() == -1 || newstart.row() > currCoord.row())
+					newstart.setRow(currCoord.row());
+				if(newstart.col() == -1 || newstart.col() > currCoord.col())
+					newstart.setCol(currCoord.col());
+				if(newend.row() == -1 || newend.row() < currCoord.row())
+					newend.setRow(currCoord.row());
+				if(newend.col() == -1 || newend.col() < currCoord.col())
+					newend.setCol(currCoord.col());
 			}
-			markShape(image, num, queue, explored);
+			
+			markShape(image, num, queue, explored, newstart, newend);
 		}
 	}
 	
@@ -85,18 +96,23 @@ public class ImageParse {
 	 * @param image
 	 * @param num
 	 */
-	public static void markAllShapes(Image image, int num, ArrayList<ArrayList<Coords>> coordsOfPatterns) {
+	public static void markAllShapes(Image image, int num, ArrayList<ArrayList<Coords>> coordsOfPatterns, ArrayList<ArrayList<Coords>> startends) {
 		Coords currHash = findHash(image);
 		
 		if(currHash != null) {
 			ArrayList<Coords> newQueue = new ArrayList<Coords>();
 			ArrayList<Coords> newExplored = new ArrayList<Coords>();
 			newQueue.add(currHash);
-			markShape(image, num, newQueue, newExplored);
 			
+			Coords start = new Coords();
+			Coords end = new Coords();
+			markShape(image, num, newQueue, newExplored, start, end);
 			ArrayList<Coords> patternstartend = new ArrayList<Coords>();
+			patternstartend.add(start);
+			patternstartend.add(end);
 			coordsOfPatterns.add(newExplored);
-			markAllShapes(image, num+1, coordsOfPatterns);
+			startends.add(patternstartend);
+			markAllShapes(image, num+1, coordsOfPatterns, startends);
 		}
 	}
 	
@@ -105,8 +121,8 @@ public class ImageParse {
 	 * @param pattern
 	 * @return percentage filled
 	 */
-	public static double getPercentageFilled(ArrayList<Coords> pattern) {
-		double totsq = getNoOfTotalSquares(pattern);
+	public static double getPercentageFilled(ArrayList<Coords> pattern, ArrayList<Coords> startend) {
+		double totsq = getNoOfTotalSquares(startend);
 		double patternsq = getNoOfTotalSquaresInPattern(pattern);
 		System.out.println("Total  : "+ totsq);
 		System.out.println("Pattern: " + patternsq);
@@ -124,12 +140,10 @@ public class ImageParse {
 	
 	/**
 	 * Get number of total squares within the rectangle bit surrounding pattern
-	 * @param pattern
+	 * @param startend contains top left coord and bottom right coord
 	 * @return
 	 */
-	public static int getNoOfTotalSquares(ArrayList<Coords> pattern) {
-		ArrayList<Coords> startend = getStartEnd(pattern);
-		
+	public static int getNoOfTotalSquares(ArrayList<Coords> startend) {
 		Coords startCoords = startend.get(0);
 		Coords endCoords = startend.get(1);
 		int totalSquares = (endCoords.row() - startCoords.row()+1) * (endCoords.col() - startCoords.col()+1);
@@ -162,12 +176,13 @@ public class ImageParse {
 		return returnArr;
 	}
 	
-	public static void determineStrategy(ArrayList<ArrayList<Coords>> listOfPatterns, Image board) throws Exception {
+	public static void determineStrategy(ArrayList<ArrayList<Coords>> listOfPatterns, ArrayList<ArrayList<Coords>> listOfStartEnds, Image board) throws Exception {
 		for(int i = 0; i < 2; i++) {
 			System.out.println("===============Next pattern");
 			ArrayList<Coords> currPattern = listOfPatterns.get(i);
+			ArrayList<Coords> currStartEnd = listOfStartEnds.get(i);
 			System.out.println(currPattern);
-			double filled = getPercentageFilled(currPattern);
+			double filled = getPercentageFilled(currPattern, currStartEnd);
 			System.out.println("Filled: " + filled);
 			
 			if(true) {
