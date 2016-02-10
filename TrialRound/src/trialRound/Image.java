@@ -27,8 +27,9 @@ public class Image {
 		if(R1 == R2) {
 			for(int i = C1; i <= C2; i++) {
 				StringBuilder currStr = new StringBuilder(imgArr[R1]);
-				currStr.setCharAt(i, '.');
-				imgArr[i] = currStr.toString();
+				System.out.println("Set char at" + i + "to L");
+				currStr.setCharAt(i, 'L');
+				imgArr[R1] = currStr.toString();
 			}
 		}
 		else if(C1 == C2) {

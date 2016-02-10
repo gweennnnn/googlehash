@@ -177,7 +177,7 @@ public class ImageParse {
 	}
 	
 	public static void determineStrategy(ArrayList<ArrayList<Coords>> listOfPatterns, ArrayList<ArrayList<Coords>> listOfStartEnds, Image board) throws Exception {
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < listOfPatterns.size(); i++) {
 			System.out.println("===============Next pattern");
 			ArrayList<Coords> currPattern = listOfPatterns.get(i);
 			ArrayList<Coords> currStartEnd = listOfStartEnds.get(i);
@@ -185,14 +185,16 @@ public class ImageParse {
 			double filled = getPercentageFilled(currPattern, currStartEnd);
 			System.out.println("Filled: " + filled);
 			
-			if(true) {
+			if(filled <= 100) {
 				currPattern.sort(Coords.RowComparator);
 				System.out.println("sorted pattern");
 				System.out.println(currPattern);
+				ArrayList<String> solution = solveByLines(currPattern, board);
+				
 			} 
-//			else {
-//				throw new Exception("Somehow percentage is more than 100 or less than 0");
-//			}
+			else {
+				throw new Exception("Somehow percentage is more than 100 or less than 0");
+			}
 		}
 	}
 	
@@ -204,5 +206,31 @@ public class ImageParse {
 		if((endCoords.row() - startCoords.row()) > (endCoords.col() - startCoords.col()))
 			return true;
 		return false;
+	}
+	
+	public static ArrayList<String> solveByLines(ArrayList<Coords> pattern, Image img) {
+		int start = 0;
+		int end = 0;
+		ArrayList<String> instructions = new ArrayList<String>();
+		for(int i = 1; i < pattern.size(); i++) {
+			Coords currcoords = pattern.get(i);
+			Coords startcoords = pattern.get(start);
+			Coords endcoords = pattern.get(end);
+			boolean samepattern = true;
+			if(startcoords.row() == currcoords.row() && endcoords.col()+1 == currcoords.col())
+				samepattern = true;
+			else
+				samepattern = false;
+			
+			if(samepattern) 
+				end = i;
+			else {
+				System.out.println("Current: " + startcoords + ", " + endcoords);
+				instructions.add(img.PAINT_LINE(startcoords.row(), startcoords.col(), endcoords.row(), endcoords.col()));
+				System.out.println(img);
+				start = end = i;
+			}
+		}
+		return instructions;
 	}
 }
