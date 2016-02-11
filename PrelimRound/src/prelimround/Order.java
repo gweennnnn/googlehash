@@ -4,24 +4,24 @@ import java.util.ArrayList;
 
 public class Order {
 
-	public Coords location;
+	public Coords destination;
 	public int id;
-	private ArrayList<Product> itemList;
-	private boolean finished;
+	public ArrayList<ProductItem> itemList;
+	public boolean finished;
 	
 	public Order(Coords location, int id){
-		this.location = location;
+		this.destination = location;
 		this.id = id;
 		
-		itemList = new ArrayList<Product>();
+		itemList = new ArrayList<ProductItem>();
 		finished = false;
 	}
 	
 	public String toString(){
-		return (location.toString() + "\n" + itemList.toString());
+		return (destination.toString() + "\n" + itemList.toString());
 	}
 	
-	public void addItem(Product item){
+	public void addItem(ProductItem item){
 		itemList.add(item);
 	}
 	

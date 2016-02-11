@@ -3,8 +3,10 @@ package prelimround;
 import java.util.Comparator;
 
 public class Coords implements Comparable<Coords> {
-	private int row;
-	private int col;
+	
+	public int row;
+	public int col;
+	
 	public Coords(int row, int col) {
 		this.row = row;
 		this.col = col;
