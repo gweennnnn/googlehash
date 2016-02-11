@@ -1,6 +1,7 @@
 package prelimround;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Simulation {
 	
@@ -9,7 +10,9 @@ public class Simulation {
 	ArrayList<Drone> drones = new ArrayList<Drone>();
 	ArrayList<Warehouse> warehouses = new ArrayList<Warehouse>();
 	ArrayList<Order> orders = new ArrayList<Order>();
+	PriorityQueue<Order> orderQueue;
 	int deadline;
+	int droneCapacity;
 	
 	ArrayList<Command> commandList = new ArrayList<Command>();
 	public int ordersCompleted = 0;
@@ -59,6 +62,65 @@ public class Simulation {
 		// Does this mean that drones need an internal clock
 	// Issue commands to drones in a queue
 	
+	// At the start we calculate a priority queue of the orders
+	public void fillOrderQueue(){
+		this.orderQueue = new PriorityQueue<Order>(Order.OrderComparator);
+		
+		for (Order order : orders) {
+			// calculate order score
+			
+			// add order to queue
+		}
+	}
+	
+	public int scoreAnOrderForAWarehouse(Order order){
+		
+		int numProducts = order.itemList.size();
+			
+		int orderWeight = 0;
+		
+		for (Product product : order.itemList) {
+			orderWeight += product.weight;
+		}
+		
+		// How many drones will this take
+		int numDrones = orderWeight / this.droneCapacity;
+		
+		int totalTime;
+		
+		for (int i = 0; i < numDrones; i++) {
+			
+			
+			
+		}
+		
+		return 0;
+	}
+	
+	public Warehouse nextClosestWarehouse(Warehouse warehouse){
+		// Here we will work out the next closest warehouse
+		
+		Warehouse closestWarehouse = null;
+		
+		Coords currentlocation = warehouse.location;
+		
+		warehouses.remove(warehouse);
+		
+		int smallestdistance = 999999999;
+		
+		for (Warehouse nextWarehouse : warehouses) {
+			
+			int thisDist = distanceInTurns(currentlocation, nextWarehouse.location);
+			
+			if(thisDist < smallestdistance){
+				smallestdistance = thisDist;
+				closestWarehouse = nextWarehouse;
+			}
+		}
+		
+		
+		return closestWarehouse;
+	}
 	
 	// Calculate distance in turns
 	// Each unit of distance means 1 turn
@@ -78,4 +140,8 @@ public class Simulation {
 	}
 	
 	// Find nearest warehouse with product (result via numOfTurns)
+	
+	// For each turn 
+	
+	
 }
