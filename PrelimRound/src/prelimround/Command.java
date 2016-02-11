@@ -22,6 +22,7 @@ public class Command {
 		this.numOfItems = numOfItems;
 	}
 	
+	@Override
 	public String toString(){
 		
 		String commandString = "";

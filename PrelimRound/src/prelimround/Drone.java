@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Drone {
 	
+	public enum EDroneState{
+		LOAD, DELIVER, UNLOAD 
+	}
+	
 	public int droneID;
 	
 	public Coords location;
@@ -12,9 +16,16 @@ public class Drone {
 	public int currentWeight;
 	
 	public ArrayList<Product> cargo;
-	public int lastDistanceFlown;
 	
-	public ArrayList<Command> previousCommands;
+	// Drones have a commandlist which they perform
+	
+	public ArrayList<Command> commandQueue;
+	
+	public int turnsRemaining = 0;
+	
+	//public int lastDistanceFlown;
+	
+	//public ArrayList<Command> previousCommands;
 	
 	public Drone(int droneID, Coords location, int maxWeight)
 	{
@@ -23,9 +34,9 @@ public class Drone {
 		this.maxWeight = maxWeight;
 		
 		this.currentWeight = 0;
-		this.lastDistanceFlown = 0;
+		//this.lastDistanceFlown = 0;
 		this.cargo = new ArrayList<Product>();
-		this.previousCommands = new ArrayList<Command>();
+		//this.previousCommands = new ArrayList<Command>();
 	}
 	
 	// Do we need a drone factory 
