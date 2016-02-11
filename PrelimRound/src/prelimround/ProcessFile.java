@@ -64,6 +64,14 @@ public class ProcessFile {
 			for(int i = 0; i < noOfOrder; i++) {
 				int oRow = sc.nextInt();
 				int oCol = sc.nextInt();
+				sc.nextLine();
+				int noOfItems = sc.nextInt();
+				sc.nextLine();
+				for(int x = 0; x < noOfItems; x++) {
+					int productid = sc.nextInt();
+					Product currProd = sim.products.get(productid);
+					ProductItem currItem = new ProductItem(currProd);
+				}
 			}
 			
 		} catch (FileNotFoundException e) {
