@@ -9,6 +9,7 @@ public class Simulation {
 	ArrayList<Drone> drones = new ArrayList<Drone>();
 	ArrayList<Warehouse> warehouses = new ArrayList<Warehouse>();
 	ArrayList<Order> orders = new ArrayList<Order>();
+	int deadline;
 	
 	ArrayList<Command> commandList = new ArrayList<Command>();
 	public int ordersCompleted = 0;

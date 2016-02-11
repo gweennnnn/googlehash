@@ -23,6 +23,7 @@ public class ProcessFile {
 			int mapcol = sc.nextInt();
 			int deadline = sc.nextInt();
 			int maxload = sc.nextInt();
+			sim.deadline = deadline;
 			sc.nextLine();
 			sim.map = (new Map(maprow, mapcol));
 			
