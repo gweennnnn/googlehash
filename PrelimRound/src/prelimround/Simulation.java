@@ -1,11 +1,13 @@
 package prelimround;
 
+import java.util.ArrayList;
+
 public class Simulation {
 	Map map = new Map();
-	Product[] products = new Product[1];
-	Drone[] drones = new Drone[1];
-	Warehouse[] warehouses = new Warehouse[1];
-	Order[] orders = new Order[1];
+	ArrayList<Product> products = new ArrayList<Product>();
+	ArrayList<Drone> drones = new ArrayList<Drone>();
+	ArrayList<Warehouse> warehouses = new ArrayList<Warehouse>();
+	ArrayList<Order> orders = new ArrayList<Order>;
 	
 	public Simulation() {
 		
