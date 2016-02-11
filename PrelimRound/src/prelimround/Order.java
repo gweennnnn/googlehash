@@ -6,14 +6,14 @@ public class Order {
 
 	public Coords destination;
 	public int id;
-	public ArrayList<ProductItem> itemList;
+	public ArrayList<Product> itemList;
 	public boolean finished;
 	
 	public Order(Coords location, int id){
 		this.destination = location;
 		this.id = id;
 		
-		itemList = new ArrayList<ProductItem>();
+		itemList = new ArrayList<Product>();
 		finished = false;
 	}
 	
@@ -21,7 +21,7 @@ public class Order {
 		return (destination.toString() + "\n" + itemList.toString());
 	}
 	
-	public void addItem(ProductItem item){
+	public void addItem(Product item){
 		itemList.add(item);
 	}
 	
