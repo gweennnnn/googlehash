@@ -10,6 +10,15 @@ public class Product {
 	}
 	
 	@Override
+	public boolean equals(Object x) {
+		Product comp = (Product) x;
+		if(comp.prodId == prodId)
+			return true;
+		return false;
+		
+	}
+	
+	@Override
 	public String toString() {
 		return "Product " + prodId + " - " + weight + "kg";
 	}

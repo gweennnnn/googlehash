@@ -10,4 +10,13 @@ public class Warehouse{
 		this.location = location;
 		this.stock = stock;
 	}
+	
+	public boolean contains(Product prod) {
+		for(int i = 0; i < stock.size(); i++) {
+			if(stock.get(i).item == prod)
+				return true;
+		}
+		return false;
+		
+	}
 }

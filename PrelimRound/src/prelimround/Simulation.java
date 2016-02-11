@@ -8,6 +8,7 @@ public class Simulation {
 	Map map = new Map();
 	ArrayList<Product> products = new ArrayList<Product>();
 	ArrayList<Drone> drones = new ArrayList<Drone>();
+	ArrayList<Drone> freeDrones = drones;
 	ArrayList<Warehouse> warehouses = new ArrayList<Warehouse>();
 	ArrayList<Order> orders = new ArrayList<Order>();
 	PriorityQueue<Order> orderQueue;
@@ -17,18 +18,67 @@ public class Simulation {
 	ArrayList<Command> commandList = new ArrayList<Command>();
 	public int ordersCompleted = 0;
 	public int totalOrders;
-	
 	public int maxTurns;
 	public int currentTurn;
-	
 	public boolean simulationFinished = false;
+
+	
+	
 	
 	public ArrayList<Drone> dronesFree = new ArrayList<Drone>();
 	
 	// This is the actual simulation of the Map, Drones, Orders
 	// Everything gets put in here
 	public Simulation() {
-		this.currentTurn = 0;
+		for(int i = 0; i < orders.size(); i++) {
+			Order currOrder = orders.get(i);
+			//determine the capacity of the order
+			//METHOD - how many drones do i need?
+			int noOfDrones = howManyDrones(drones.get(i).maxWeight, currOrder);
+			ArrayList<Drone> currDrones = new ArrayList<Drone>();
+			for(int x = 0; x < noOfDrones; x++) {
+				currDrones.add(freeDrones.remove(0));
+			}
+			
+			for(int x = 0; x < noOfDrones; x++) {
+				Drone currDrone = freeDrones.get(x);
+			}
+			//determine the moves needed for each drone to get to the right warehouse and deliver
+			//METHOD - score each order based on the amount of turns it takes
+			
+			//determine remaining moves left
+		}
+	}
+	
+	public Warehouse closestWarehouse(Order order) {
+		boolean found = false;
+		for(int i = 0; i < warehouses.size(); i++) {
+			for(int x = 0; x < order.itemList.size(); x++) {
+				if(order.itemList.get(x).equals(order.itemList))
+					
+			}
+		}
+	}
+	
+	
+	
+	public int totalWeightForOrder (Order order) {
+		int totWeight = 0;
+		for(int i = 0; i < order.itemList.size(); i++) {
+			Product p = order.itemList.get(i);
+			totWeight += p.weight;
+		}
+		return totWeight;
+	}
+	
+	public int howManyDrones(int droneMaxWeight, Order order) {
+		int totalWeight = totalWeightForOrder(order);
+		
+		double calc = Math.ceil(totalWeight / droneMaxWeight);
+		int noOfDrones = (int)calc;
+		
+		return noOfDrones;
+		
 	}
 	
 	//// Simulation

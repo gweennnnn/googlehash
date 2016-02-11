@@ -9,6 +9,7 @@ public class Order {
 	public int id;
 	public ArrayList<Product> itemList;
 	public boolean finished;
+	public int score;
 	
 	public int score;
 	
@@ -18,6 +19,7 @@ public class Order {
 		
 		itemList = new ArrayList<Product>();
 		finished = false;
+		score = -1;
 	}
 	
 	public static Comparator<Order> OrderComparator = new Comparator<Order>() {
