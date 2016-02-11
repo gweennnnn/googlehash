@@ -3,10 +3,10 @@ package prelimround;
 public class Product {
 	
 	public int weight;
-	public String name;
+	public int prodId;
 	
-	public Product(int weight, String name) {
+	public Product(int weight, int prodId) {
 		this.weight = weight;
-		this.name = name;
+		this.prodId = prodId;
 	}
 }

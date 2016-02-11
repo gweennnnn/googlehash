@@ -10,6 +10,10 @@ public class Map {
 	ArrayList<Coords> warehouseLocations;
 	ArrayList<Coords> houseLocations;
 	
+	public Map() {
+		
+	}
+	
 	public Map(int length, int height){
 		
 	}

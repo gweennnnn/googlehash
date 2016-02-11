@@ -10,52 +10,32 @@ public class ProcessFile {
 		this.filename = filename;
 	}
 	
-	public char[][] getFileAsCharArray() {
+	public void getFile(Map map, Drone[] drones, Product[] products, Warehouse[] warehouses, Order[] orders) {
 		File file = new File(filename);
 		Scanner sc = null;
 		
 		try {
 			sc = new Scanner(file);
+			//make map
+			int maprow = sc.nextInt();
+			int mapcol = sc.nextInt();
+			int deadline = sc.nextInt();
+			int maxload = sc.nextInt();
+			sc.nextLine();
+			map = new Map(maprow, mapcol);
+			
+			//products
+			int noOfProducts = sc.nextInt();
+			sc.nextLine();
+			for(int i = 0; i < noOfProducts; i++) {
+				int productWeight = sc.nextInt();
+				
+			}
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println(e);
 		}
-		
-		int row = sc.nextInt();
-		int col = sc.nextInt();
-		sc.nextLine();
-		char[][] input = new char[row][col];
-		
-		for(int i = 0; i < row; i++) {
-			String currStr = sc.nextLine();
-			input[i] = currStr.toCharArray();
-		}
-		
-		return input;
-	}
-	
-	public String[] getFile() {
-		File file = new File(filename);
-		Scanner sc = null;
-		
-		try {
-			sc = new Scanner(file);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println(e);
-		}
-		
-		int row = sc.nextInt();
-		int col = sc.nextInt();
-		sc.nextLine();
-		String[] input = new String[row];
-		
-		for(int i = 0; i < row; i++) {
-			input[i] = sc.nextLine().trim();
-		}
-		
-		return input;
 	}
 }
