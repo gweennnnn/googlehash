@@ -34,7 +34,6 @@ public class ProcessFile {
 			for(int i = 0; i < noOfProducts; i++) {
 				int productWeight = sc.nextInt();
 				Product newProd = new Product(productWeight, i);
-				System.out.println(newProd);
 				sim.products.add(newProd);
 			}
 			sc.nextLine();
@@ -59,6 +58,7 @@ public class ProcessFile {
 			sc.nextLine();
 			
 			//order
+			System.out.println("Create Order");
 			int noOfOrder = sc.nextInt();
 			sc.nextLine();
 			for(int i = 0; i < noOfOrder; i++) {
@@ -67,11 +67,14 @@ public class ProcessFile {
 				sc.nextLine();
 				int noOfItems = sc.nextInt();
 				sc.nextLine();
+				
 				for(int x = 0; x < noOfItems; x++) {
 					int productid = sc.nextInt();
 					Product currProd = sim.products.get(productid);
-					ProductItem currItem = new ProductItem(currProd);
+					System.out.println(currProd);
+					sim.products.add(currProd);
 				}
+				sc.nextLine();
 			}
 			
 		} catch (FileNotFoundException e) {
